@@ -44,7 +44,7 @@ public class TwitterConnectionServlet extends HttpServlet {
         RequestToken requestToken;
 
         try {
-            requestToken = twitter.getOAuthRequestToken(UtilTwitter.CALL_BACK_URL);
+            requestToken = twitter.getOAuthRequestToken(util.UtilRoutes.CALL_BACK_URL);
             String url = requestToken.getAuthenticationURL();
             
             System.out.println("End TwitterConnectionServlet.doGet");
