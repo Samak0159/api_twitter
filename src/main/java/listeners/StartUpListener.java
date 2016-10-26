@@ -5,10 +5,6 @@
  */
 package listeners;
 
-import bdd.ConnectionBdd;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;

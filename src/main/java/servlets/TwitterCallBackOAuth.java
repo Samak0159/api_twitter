@@ -15,8 +15,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import metier.User;
-import twitter4j.Twitter;
-import twitter4j.TwitterFactory;
 import util.UtilRoutes;
 
 /**
