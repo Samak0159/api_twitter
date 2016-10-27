@@ -1,12 +1,39 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
-        <title>Start Page</title>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+      <title>Accueil</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link rel="stylesheet" href="css/bootstrap.min.css">
+      <script src="js/bootstrap.min.js"></script>
     </head>
     <body>
-        <a href="auth/twitter/connect">
-            Sign in with twitter
-        </a>
-    </body>
+
+    <div class="jumbotron text-center">
+      <h1>API Twitter</h1>
+        
+      <a href="auth/twitter/connect"><img src="img/twitter.png" class="img-rounded" alt="Twitter" width="150" height="150"></a>
+      </br>
+      <p>Cliquez sur le logo pour vous connecter à Twitter.</p>
+    
+    <div class="container">
+        <div class="row">
+          <div class="col-sm-4">
+              <u><h3>Timeline</h3></u>
+            <p>Vous aurez la possibilité de visualiser simplement vos derniers tweets.</p>
+            <p>De plus, il sera également possible de marquer différents tweets comme favoris ou de les supprimer.</p>
+          </div>
+          <div class="col-sm-4">
+              <u><h3>Favoris</h3></u>
+            <p>La fonctionnalité favoris permet de visualiser uniquement vos tweets préférés !</p>
+          </div>
+          <div class="col-sm-4">
+              <u><h3>Tweets supprimés</h3></u>
+            <p>Vos tweets supprimés seront stockés sur une page externe permettant de les récupérés si besoin.</p>
+            <p>Ceux-ci seront disponible durant une durée déterminée.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+</body>
 </html>
