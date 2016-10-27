@@ -63,10 +63,6 @@ public class TwitterCallBackOAuth extends HttpServlet {
         } catch (TwitterException ex) {
             Logger.getLogger(TwitterCallBackOAuth.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        if(twitterUser==null) {
-            //throw error
-        }
 
         User user = new User();
         user.setId(twitterUser.getId());
@@ -77,7 +73,9 @@ public class TwitterCallBackOAuth extends HttpServlet {
         user.setTwitter_secret_token(secretToken);
 
         try {
-            UserDao.insert(user);
+            if( !UserDao.alreadyRegistered(secretToken)) {
+                UserDao.insert(user);    
+            }
         } catch (SQLException ex) {
             Logger.getLogger(TwitterCallBackOAuth.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
