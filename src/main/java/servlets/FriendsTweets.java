@@ -41,7 +41,7 @@ public class FriendsTweets extends HelloServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         System.out.println("Start TwitterCallBackOAuth.doGet");
 
-        /*
+        //Ceci ne devrait pas etre dans un front. Il permet cependant de tester l'affichage des tweets
         User u = (User) request.getSession().getAttribute("currentUser");
         u.resetStatus();
         Twitter twitter = (Twitter) request.getSession().getAttribute("twitter");
@@ -61,17 +61,16 @@ public class FriendsTweets extends HelloServlet {
         }
 
         request.setAttribute("user", u);
-        */
 
+        //Récupération des Tweets en Json reçu par le Back
+        /*
         User user = (User) request.getSession().getAttribute("currentUser");
         
         String url = UtilCurl.URL_FOLLOWWINGS_TWEET;
         url = url.replace(":id", String.valueOf(user.getId()));
         
         StringBuffer stringBuffer = UtilCurl.getContent(url);
-        //JsonReader jsonReader = new ;
-        
+        */
         this.getServletContext().getRequestDispatcher("/WEB-INF/tweet.jsp").forward(request, response);
-        //response.sendRedirect(UtilRoutes.TWEET_VIEW);
     }
 }
