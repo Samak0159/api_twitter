@@ -6,6 +6,8 @@
 package servlets;
 
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -38,17 +40,20 @@ public class TwitterConnectionServlet extends HttpServlet {
 
         TwitterFactory factory = new TwitterFactory(builder.build());
         Twitter twitter = factory.getInstance();
-        
-        RequestToken requestToken;
-
+        //Twitter twitter = new TwitterFactory().getInstance();
+        request.getSession().setAttribute("twitter", twitter);
         try {
-            requestToken = twitter.getOAuthRequestToken(util.UtilRoutes.CALL_BACK_URL);
-            String url = requestToken.getAuthenticationURL();
-            
-            System.out.println("End TwitterConnectionServlet.doGet");
-            response.sendRedirect(url);
+            StringBuffer callbackURL = request.getRequestURL();
+            int index = callbackURL.lastIndexOf("/");
+            callbackURL.replace(index, callbackURL.length(), "").append("/callback");
+
+            RequestToken requestToken = twitter.getOAuthRequestToken(callbackURL.toString());
+            request.getSession().setAttribute("requestToken", requestToken);
+            response.sendRedirect(requestToken.getAuthenticationURL());
+
         } catch (TwitterException e) {
-            e.printStackTrace();
+            Logger.getLogger(TwitterCallBackOAuth.class.getName()).log(Level.SEVERE, null, e);
         }
+
     }
 }

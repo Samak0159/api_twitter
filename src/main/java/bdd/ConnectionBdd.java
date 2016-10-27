@@ -29,16 +29,9 @@ public class ConnectionBdd {
 
     public static Connection getInstance() throws ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException {
         if (_instance == null) {
-            //Jdbc.creer("oracle.jdbc.driver.OracleDriver", "jdbc:oracle:thin:", "@localhost:1521:XE", "", "btssio", "btssio");
-            /*
-             Jdbc.creer("com.mysql.jdbc.Driver", "jdbc:mysql://", "localhost/", "api_rest_twitter", "rest", "epsi");
-             Jdbc.getInstance().connecter();
-
-             _instance = Jdbc.getInstance().getConnexion();**/
             Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
-            //_instance = DriverManager.getConnection("jdbc:mysql://localhost/" + BDD + "?user=" + USER + "&password=" + PASSWORD);
+
             _instance = DriverManager.getConnection("jdbc:mysql://localhost/" + BDD + "?user=" + USER + "&password=" + PASSWORD+ "&serverTimezone="+TIME_ZONE);
-            
         }
 
         return _instance;

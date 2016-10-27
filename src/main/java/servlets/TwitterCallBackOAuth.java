@@ -15,26 +15,21 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import metier.User;
+import twitter4j.Twitter;
+import twitter4j.TwitterException;
+import twitter4j.auth.AccessToken;
+import twitter4j.auth.RequestToken;
 import util.UtilRoutes;
 
 /**
  *
  * @author sylvain
  */
-@WebServlet("/auth/twitter/callBack")
+@WebServlet("/auth/twitter/callback")
 public class TwitterCallBackOAuth extends HttpServlet {
 
     public TwitterCallBackOAuth() {
         super();
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        System.out.println("Start TwitterCallBackOAuth.doPost");
-
-        response.getWriter().print("DO POST");
-
-        System.out.println("End TwitterCallBackOAuth.doPost");
     }
 
     /**
@@ -42,37 +37,54 @@ public class TwitterCallBackOAuth extends HttpServlet {
      *
      * @param request
      * @param response
-     * @throws IOException
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) {
         System.out.println("Start TwitterCallBackOAuth.doGet");
 
-        //response.getWriter().print("hello world");
-        System.out.println("parameters");
+        AccessToken accessToken = null;
 
-        String token = request.getParameter("oauth_token");
-
-        System.out.println("Token");
-        System.out.println(token);
-
+        Twitter twitter = (Twitter) request.getSession().getAttribute("twitter");
+        RequestToken requestToken = (RequestToken) request.getSession().getAttribute("requestToken");
         String verifier = request.getParameter("oauth_verifier");
-        System.out.println("verifier");
-        System.out.println(verifier);
+
+        try {
+            accessToken = twitter.getOAuthAccessToken(requestToken, verifier);
+        } catch (TwitterException e) {
+            Logger.getLogger(TwitterCallBackOAuth.class.getName()).log(Level.SEVERE, null, e);
+        }
+
+        System.out.println("Access token");
+
+        String token = accessToken.getToken();
+        String secretToken = accessToken.getTokenSecret();
+        
+        twitter4j.User twitterUser = null;
+        try {
+            twitterUser = twitter.showUser( accessToken.getScreenName() );
+        } catch (TwitterException ex) {
+            Logger.getLogger(TwitterCallBackOAuth.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        if(twitterUser==null) {
+            //throw error
+        }
+
+        System.out.println("TwitterUSer");
+        System.out.println(twitterUser);
 
         User user = new User();
-        user.setOauth_token(token);
-        user.setOauth_verifier(verifier);
+        user.setId(twitterUser.getId());
+        user.setFullname(twitterUser.getName());
+        user.setUsername(twitterUser.getScreenName());
+        user.setUrlPhoto(twitterUser.getProfileImageURL());
+        user.setTwitter_token(token);
+        user.setTwitter_secret_token(secretToken);
 
         try {
             UserDao.insert(user);
         } catch (SQLException ex) {
-            System.out.println("SQLException: " + ex.getMessage());
-            System.out.println("SQLState: " + ex.getSQLState());
-            System.out.println("VendorError: " + ex.getErrorCode());
-            
             Logger.getLogger(TwitterCallBackOAuth.class.getName()).log(Level.SEVERE, null, ex);
-
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(TwitterCallBackOAuth.class.getName()).log(Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
@@ -81,8 +93,13 @@ public class TwitterCallBackOAuth extends HttpServlet {
             Logger.getLogger(TwitterCallBackOAuth.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        response.sendRedirect(UtilRoutes.CALL_BACK_VIEW);
+        request.getSession().setAttribute("currentUser", user);
 
         System.out.println("End TwitterCallBackOAuth.doGet");
+        try {
+            response.sendRedirect(UtilRoutes.CALL_BACK_VIEW);
+        } catch (IOException ex) {
+            Logger.getLogger(TwitterCallBackOAuth.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

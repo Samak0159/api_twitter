@@ -35,12 +35,13 @@ public class UserDao {
         User user;
         while (resultSet.next()) {
             user = new User();
-            user.setId(resultSet.getInt("id"));
-            user.setNom(resultSet.getString("nom"));
-            user.setPrenom(resultSet.getString("prenom"));
-            user.setEmail(resultSet.getString("email"));
-            user.setOauth_token(resultSet.getString("oauth_token"));
-            user.setOauth_verifier(resultSet.getString("oauth_verifier"));
+            user.setId(resultSet.getLong("id"));
+            user.setFullname(resultSet.getString("fullname"));
+            user.setUsername(resultSet.getString("username"));
+            user.setUrlPhoto(resultSet.getString("urlPhoto"));
+            user.setLastConnection(resultSet.getDate("lastConnection"));
+            user.setTwitter_token(resultSet.getString("twitter_token"));
+            user.setTwitter_secret_token(resultSet.getString("twitter_secret_token"));
 
             users.add(user);
         }
@@ -62,15 +63,41 @@ public class UserDao {
         resultSet = preparedStatement.executeQuery();
 
         if (resultSet.next()) {
-            user.setId(resultSet.getInt("id"));
-            user.setNom(resultSet.getString("nom"));
-            user.setPrenom(resultSet.getString("prenom"));
-            user.setEmail(resultSet.getString("email"));
-            user.setOauth_token(resultSet.getString("oauth_token"));
-            user.setOauth_verifier(resultSet.getString("oauth_verifier"));
+            user.setId(resultSet.getLong("id"));
+            user.setFullname(resultSet.getString("fullname"));
+            user.setUsername(resultSet.getString("username"));
+            user.setUrlPhoto(resultSet.getString("urlPhoto"));
+            user.setLastConnection(resultSet.getDate("lastConnection"));
+            user.setTwitter_token(resultSet.getString("twitter_token"));
+            user.setTwitter_secret_token(resultSet.getString("twitter_secret_token"));
         }
 
         return user;
+    }
+
+    public static boolean alreadyRegistered(String secretToken) throws ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException {
+        User user = null;
+        ResultSet resultSet = null;
+        PreparedStatement preparedStatement;
+
+        String requete = "SELECT * FROM user WHERE twitter_secret_token= ?";
+
+        // préparer la requête
+        preparedStatement = ConnectionBdd.getInstance().prepareStatement(requete);
+        preparedStatement.setString(1, secretToken);
+        resultSet = preparedStatement.executeQuery();
+
+        if (resultSet.next()) {
+            user.setId(resultSet.getLong("id"));
+            user.setFullname(resultSet.getString("fullname"));
+            user.setUsername(resultSet.getString("username"));
+            user.setUrlPhoto(resultSet.getString("urlPhoto"));
+            user.setLastConnection(resultSet.getDate("lastConnection"));
+            user.setTwitter_token(resultSet.getString("twitter_token"));
+            user.setTwitter_secret_token(resultSet.getString("twitter_secret_token"));
+        }
+
+        return (user != null);
     }
 
     /**
@@ -86,25 +113,20 @@ public class UserDao {
         String requete;
         PreparedStatement preparedStatement;
 
-        requete = "INSERT INTO user (nom, prenom, email, lastConnection, oauth_token, oauth_verifier) VALUES (?, ?, ?, ?, ?, ?)";
-        
+        requete = "INSERT INTO user (id, fullname, username, urlPhoto, lastConnection, twitter_token, twitter_secret_token) VALUES (?, ?, ?, ?, ?, ?, ?)";
+
         //Transfer Date type
-        System.out.println("User Date");;
-        System.out.println(user.getLastConnection().getTime());
-        
         java.sql.Date date = new java.sql.Date(user.getLastConnection().getTime());
-        
-        System.out.println("DATE :");
-        System.out.println(date);
 
         //prepareStatement
         preparedStatement = ConnectionBdd.getInstance().prepareStatement(requete);
-        preparedStatement.setString(1, user.getNom());
-        preparedStatement.setString(2, user.getPrenom());
-        preparedStatement.setString(3, user.getEmail());
-        preparedStatement.setDate(4, date);
-        preparedStatement.setString(5, user.getOauth_token());
-        preparedStatement.setString(6, user.getOauth_verifier());
+        preparedStatement.setLong(1, user.getId());
+        preparedStatement.setString(2, user.getFullname());
+        preparedStatement.setString(3, user.getUsername());
+        preparedStatement.setString(4, user.getUrlPhoto());
+        preparedStatement.setDate(5, date);
+        preparedStatement.setString(6, user.getTwitter_token());
+        preparedStatement.setString(7, user.getTwitter_secret_token());
 
         //Execute
         int nb = preparedStatement.executeUpdate();

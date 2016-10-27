@@ -14,4 +14,6 @@ public class UtilRoutes {
     private static final String APPLICATION = "/api_twitter/";
     public final static String CALL_BACK_VIEW = APPLICATION+"accueil.html";
     public final static String CALL_BACK_URL = "http://83.204.90.154:8080/api_rest_twitter/auth/twitter/callBack";
+    
+    public final static String TWEET_VIEW = APPLICATION+"tweet.jsp";
 }
