@@ -2,12 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fec3f5c4-1dda-4364-a8a2-4ea7cae954de" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/bdd/ConnectionBdd.java" afterPath="$PROJECT_DIR$/src/main/java/bdd/ConnectionBdd.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/bdd/UserDao.java" afterPath="$PROJECT_DIR$/src/main/java/bdd/UserDao.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/metier/User.java" afterPath="$PROJECT_DIR$/src/main/java/metier/User.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/servlets/FriendsTweets.java" afterPath="$PROJECT_DIR$/src/main/java/servlets/FriendsTweets.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/servlets/TwitterCallBackOAuth.java" afterPath="$PROJECT_DIR$/src/main/java/servlets/TwitterCallBackOAuth.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/servlets/TwitterConnectionServlet.java" afterPath="$PROJECT_DIR$/src/main/java/servlets/TwitterConnectionServlet.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/util/UtilRoutes.java" afterPath="$PROJECT_DIR$/src/main/java/util/UtilRoutes.java" />
     </list>
     <ignored path="api_twitter.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -765,16 +762,16 @@
       <option name="presentableId" value="Default" />
       <updated>1477550870356</updated>
       <workItem from="1477550872982" duration="125000" />
-      <workItem from="1477551015470" duration="1112000" />
+      <workItem from="1477551015470" duration="1113000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1237000" />
+    <option name="totallyTimeSpent" value="1238000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />

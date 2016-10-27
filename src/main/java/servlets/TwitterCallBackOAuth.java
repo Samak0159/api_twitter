@@ -53,7 +53,10 @@ public class TwitterCallBackOAuth extends HttpServlet {
         } catch (TwitterException e) {
             Logger.getLogger(TwitterCallBackOAuth.class.getName()).log(Level.SEVERE, null, e);
         }
-
+        
+        System.out.println("AccesToken");
+        System.out.println(accessToken);
+        
         String token = accessToken.getToken();
         String secretToken = accessToken.getTokenSecret();
         
@@ -71,7 +74,7 @@ public class TwitterCallBackOAuth extends HttpServlet {
         user.setUrlPhoto(twitterUser.getProfileImageURL());
         user.setTwitter_token(token);
         user.setTwitter_secret_token(secretToken);
-
+        /*
         try {
             if( !UserDao.alreadyRegistered(secretToken)) {
                 UserDao.insert(user);    
@@ -85,6 +88,7 @@ public class TwitterCallBackOAuth extends HttpServlet {
         } catch (IllegalAccessException ex) {
             Logger.getLogger(TwitterCallBackOAuth.class.getName()).log(Level.SEVERE, null, ex);
         }
+                */
 
         request.getSession().setAttribute("currentUser", user);
 

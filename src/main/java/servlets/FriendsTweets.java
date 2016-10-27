@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.json.JsonReader;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -18,6 +19,7 @@ import twitter4j.PagableResponseList;
 import twitter4j.Status;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
+import util.UtilCurl;
 import util.UtilRoutes;
 
 /**
@@ -39,6 +41,7 @@ public class FriendsTweets extends HelloServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         System.out.println("Start TwitterCallBackOAuth.doGet");
 
+        /*
         User u = (User) request.getSession().getAttribute("currentUser");
         u.resetStatus();
         Twitter twitter = (Twitter) request.getSession().getAttribute("twitter");
@@ -58,6 +61,15 @@ public class FriendsTweets extends HelloServlet {
         }
 
         request.setAttribute("user", u);
+        */
+
+        User user = (User) request.getSession().getAttribute("currentUser");
+        
+        String url = UtilCurl.URL_FOLLOWWINGS_TWEET;
+        url = url.replace(":id", String.valueOf(user.getId()));
+        
+        StringBuffer stringBuffer = UtilCurl.getContent(url);
+        //JsonReader jsonReader = new ;
         
         this.getServletContext().getRequestDispatcher("/WEB-INF/tweet.jsp").forward(request, response);
         //response.sendRedirect(UtilRoutes.TWEET_VIEW);
