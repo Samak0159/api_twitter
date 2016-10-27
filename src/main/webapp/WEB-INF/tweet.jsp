@@ -13,18 +13,19 @@
                 User user = (User) request.getAttribute("user");
 
                 ArrayList<Status> status = user.getCurrentTweets();
+                
                 for (Status st : status) {
             %>
-
+            
             <!-- BLOCK TWEET -->
             <div class="container" >
                 <div class="col-sm-offset-3 col-sm-6">
                     <div class="col-sm-2">
-                        <img style="margin-top:5px;" src="<%out.println(user.getUrlPhoto());%>">
+                        <img style="margin-top:5px;" src="<%out.println(st.getUser().getProfileImageURL());%>">
                     </div>
                     <div class="col-sm-10">
-                        <strong class="fullname"> <%out.println(user.getNom());%></strong>
-                        <!--<span>- @<% //out.print(user.getUsername());%></span>-->
+                        <strong class="fullname"> <%out.println(st.getUser().getScreenName());%></strong>
+                        <span>- @<% out.print(st.getUser().getName());%></span>
                         <p><%out.println(st.getText());%></p>
                     </div>
                 </div>

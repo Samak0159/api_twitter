@@ -54,8 +54,6 @@ public class TwitterCallBackOAuth extends HttpServlet {
             Logger.getLogger(TwitterCallBackOAuth.class.getName()).log(Level.SEVERE, null, e);
         }
 
-        System.out.println("Access token");
-
         String token = accessToken.getToken();
         String secretToken = accessToken.getTokenSecret();
         
@@ -69,9 +67,6 @@ public class TwitterCallBackOAuth extends HttpServlet {
         if(twitterUser==null) {
             //throw error
         }
-
-        System.out.println("TwitterUSer");
-        System.out.println(twitterUser);
 
         User user = new User();
         user.setId(twitterUser.getId());

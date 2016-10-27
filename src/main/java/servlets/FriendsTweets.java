@@ -25,8 +25,8 @@ import util.UtilRoutes;
  * @author sylvain
  */
 @WebServlet("/twitter/friends")
-public class FriendsTweets {
-    
+public class FriendsTweets extends HelloServlet {
+
     /**
      * Get all friends timeline
      *
@@ -35,17 +35,18 @@ public class FriendsTweets {
      * @throws IOException
      * @throws javax.servlet.ServletException
      */
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         System.out.println("Start TwitterCallBackOAuth.doGet");
-        
-        User u = (User) request.getAttribute("currentUser");
+
+        User u = (User) request.getSession().getAttribute("currentUser");
         u.resetStatus();
-        Twitter twitter = (Twitter) request.getAttribute("twitter");
+        Twitter twitter = (Twitter) request.getSession().getAttribute("twitter");
 
         try {
-           PagableResponseList<twitter4j.User> userList = twitter.getFriendsList(twitter.getId(), -1);
+            PagableResponseList<twitter4j.User> userList = twitter.getFriendsList(twitter.getId(), -1);
 
-           for (twitter4j.User us : userList){
+            for (twitter4j.User us : userList) {
                 List<Status> statusFollower = twitter.getUserTimeline(us.getId());
                 for (Status sts : statusFollower) {
                     u.addStatus(sts);
@@ -56,8 +57,9 @@ public class FriendsTweets {
             Logger.getLogger(FriendsTweets.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        request.setAttribute("user",u);
-        //this.getServletContext().getRequestDispatcher("/WEB-INF/tweet.jsp").forward(request, response);
-        response.sendRedirect(UtilRoutes.TWEET_VIEW);
+        request.setAttribute("user", u);
+        
+        this.getServletContext().getRequestDispatcher("/WEB-INF/tweet.jsp").forward(request, response);
+        //response.sendRedirect(UtilRoutes.TWEET_VIEW);
     }
 }
